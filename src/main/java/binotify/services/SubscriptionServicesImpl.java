@@ -3,10 +3,23 @@ package binotify.services;
 import binotify.formats.*;
 import binotify.dao.*;
 import javax.jws.*;
+import java.util.*;
 
 @WebService
 public class SubscriptionServicesImpl implements SubscriptionServices {
     private subscriptionDao subscriptionDao = new subscriptionDao();
+
+    @Override
+    public subscription[] getSubscription() throws Exception{
+        List<subscription> list = this.subscriptionDao.getSubscription();
+        subscription[] res = new subscription[list.size()];
+        for (int i=0; i<list.size(); i++) {
+            subscription s = new subscription(list.get(i).getCreator_id(), list.get(i).getSubscriber_id());
+            s.setStatus(list.get(i).getStatus());
+            res[i] = s;
+        }
+        return res;
+    }
 
     @Override
     public boolean addSubscription(int creator_id, int subscriber_id) {

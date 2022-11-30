@@ -4,8 +4,31 @@ import binotify.formats.*;
 import binotify.helpers.*;
 
 import java.sql.*;
+import java.util.*;
 
 public class subscriptionDao {
+    public List<subscription> getSubscription() throws SQLException {
+        String query = "SELECT * FROM subscription";
+
+        Connection conn = DBConnector.getConnection();
+        PreparedStatement statement = conn.prepareStatement(query);
+
+        ResultSet resultSet = statement.executeQuery();
+//        resultSet.next();
+        List<subscription> subscriptionList = new ArrayList<subscription>();
+        while(resultSet.next()){
+            int creator_id = resultSet.getInt("creator_id");
+            int subscriber_id = resultSet.getInt("subscriber_id");
+            String status = resultSet.getString("status");
+            subscription s = new subscription(creator_id, subscriber_id);
+            s.setStatus(status);
+            subscriptionList.add(s);
+        }
+//        String status = resultSet.getString("status");
+
+        return subscriptionList;
+    }
+
     public boolean addSubscription(subscription subscription) throws SQLException {
         String query = "INSERT INTO subscription (creator_id, subscriber_id) VALUES (?,?)";
 
