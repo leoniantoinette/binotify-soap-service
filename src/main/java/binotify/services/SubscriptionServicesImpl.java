@@ -10,7 +10,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     private subscriptionDao subscriptionDao = new subscriptionDao();
 
     @Override
-    public subscription[] getSubscription() throws Exception{
+    public subscription[] getSubscription(String ip, String endpoint) throws Exception{
         List<subscription> list = this.subscriptionDao.getSubscription();
         subscription[] res = new subscription[list.size()];
         for (int i=0; i<list.size(); i++) {
@@ -22,7 +22,8 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     }
 
     @Override
-    public boolean addSubscription(int creator_id, int subscriber_id) {
+    public boolean addSubscription(String ip, String endpoint, int creator_id, int subscriber_id) {
+        System.out.println("ip " + ip + " endpoint " + endpoint);
         subscription subscription = new subscription(creator_id, subscriber_id);
         boolean res = false;
         try {
@@ -34,7 +35,8 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     }
 
     @Override
-    public boolean approveSubscription(int creator_id, int subscriber_id) {
+    public boolean approveSubscription(String ip, String endpoint, int creator_id, int subscriber_id) {
+        System.out.println("approveSubscription creator_id " + creator_id + " subscriber_id " + subscriber_id);
         subscription subscription = new subscription(creator_id, subscriber_id);
         boolean res = false;
         try {
@@ -46,7 +48,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     }
 
     @Override
-    public boolean rejectSubscription(int creator_id, int subscriber_id) {
+    public boolean rejectSubscription(String ip, String endpoint, int creator_id, int subscriber_id) {
         subscription subscription = new subscription(creator_id, subscriber_id);
         boolean res = false;
         try {
@@ -58,7 +60,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     }
 
     @Override
-    public boolean checkSubscription(int creator_id, int subscriber_id) {
+    public boolean checkSubscription(String ip, String endpoint, int creator_id, int subscriber_id) {
         subscription subscription = new subscription(creator_id, subscriber_id);
         boolean res = false;
         try {

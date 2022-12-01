@@ -8,18 +8,18 @@ import javax.jws.*;
 public interface SubscriptionServices {
 
     @WebMethod
-    public subscription[] getSubscription() throws Exception;
+    public subscription[] getSubscription(String ip, String endpoint) throws Exception;
 
     @WebMethod
-    public boolean addSubscription(int creator_id, int subscriber_id);
+    public boolean addSubscription(String ip, String endpoint, int creator_id, int subscriber_id);
 
     @WebMethod
-    public boolean approveSubscription(int creator_id, int subscriber_id);
+    public boolean approveSubscription(String ip, String endpoint, int creator_id, int subscriber_id);
 
     @WebMethod
-    public boolean rejectSubscription(int creator_id, int subscriber_id);
+    public boolean rejectSubscription(String ip, String endpoint, int creator_id, int subscriber_id);
 
     @WebMethod
-    public boolean checkSubscription(int creator_id, int subscriber_id);
+    public boolean checkSubscription(String ip, String endpoint, int creator_id, int subscriber_id);
 
 }
