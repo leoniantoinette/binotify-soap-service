@@ -10,6 +10,7 @@ import java.io.*;
 @WebService
 public class SubscriptionServicesImpl implements SubscriptionServices {
     private subscriptionDao subscriptionDao = new subscriptionDao();
+    private loggingDao loggingDao = new loggingDao();
 
     @Override
     public subscription[] getSubscription(String ip, String endpoint) throws Exception {
@@ -20,7 +21,21 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
             s.setStatus(list.get(i).getStatus());
             res[i] = s;
         }
+        // upload log
+        log log = new log(
+            "menanggapi permintaan subscription request",
+            ip,
+            endpoint
+        );
+        try {
+            this.loggingDao.uploadLog(log);
+        } catch (Exception e) {
+            throw new Exception("Error while uploading log");
+        }
         return res;
+
+
+
     }
 
     @Override
@@ -30,6 +45,18 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
         boolean res = false;
         try {
             res = this.subscriptionDao.addSubscription(subscription);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        // upload log
+        log log = new log(
+                "menanggapi request subscription",
+                ip,
+                endpoint
+        );
+        try {
+            this.loggingDao.uploadLog(log);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -76,7 +103,19 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        // upload log
+        log log = new log(
+                "menanggapi approve subscription",
+                ip,
+                endpoint
+        );
+        try {
+            this.loggingDao.uploadLog(log);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return res;
+
     }
 
     @Override
@@ -119,6 +158,18 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        // upload log
+        log log = new log(
+                "menanggapi reject subscription",
+                ip,
+                endpoint
+        );
+        try {
+            this.loggingDao.uploadLog(log);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return res;
     }
 
@@ -128,6 +179,18 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
         boolean res = false;
         try {
             res = this.subscriptionDao.checkSubscription(subscription);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        // upload log
+        log log = new log(
+                "menanggapi check subscription",
+                ip,
+                endpoint
+        );
+        try {
+            this.loggingDao.uploadLog(log);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
