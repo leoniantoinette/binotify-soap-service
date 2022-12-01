@@ -8,13 +8,12 @@ import java.util.*;
 
 public class subscriptionDao {
     public List<subscription> getSubscription() throws SQLException {
-        String query = "SELECT * FROM subscription";
+        String query = "SELECT * FROM subscription WHERE status = 'PENDING'";
 
         Connection conn = DBConnector.getConnection();
         PreparedStatement statement = conn.prepareStatement(query);
 
         ResultSet resultSet = statement.executeQuery();
-//        resultSet.next();
         List<subscription> subscriptionList = new ArrayList<subscription>();
         while(resultSet.next()){
             int creator_id = resultSet.getInt("creator_id");
@@ -24,8 +23,6 @@ public class subscriptionDao {
             s.setStatus(status);
             subscriptionList.add(s);
         }
-//        String status = resultSet.getString("status");
-
         return subscriptionList;
     }
 
