@@ -15,7 +15,7 @@ public class subscriptionDao {
 
         ResultSet resultSet = statement.executeQuery();
         List<subscription> subscriptionList = new ArrayList<subscription>();
-        while(resultSet.next()){
+        while (resultSet.next()) {
             int creator_id = resultSet.getInt("creator_id");
             int subscriber_id = resultSet.getInt("subscriber_id");
             String status = resultSet.getString("status");
@@ -72,5 +72,24 @@ public class subscriptionDao {
         String status = resultSet.getString("status");
 
         return status.equals("ACCEPTED");
+    }
+
+    public List<subscription> getAllSubscription() throws SQLException {
+        String query = "SELECT * FROM subscription";
+
+        Connection conn = DBConnector.getConnection();
+        PreparedStatement statement = conn.prepareStatement(query);
+
+        ResultSet resultSet = statement.executeQuery();
+        List<subscription> subscriptionList = new ArrayList<subscription>();
+        while (resultSet.next()) {
+            int creator_id = resultSet.getInt("creator_id");
+            int subscriber_id = resultSet.getInt("subscriber_id");
+            String status = resultSet.getString("status");
+            subscription s = new subscription(creator_id, subscriber_id);
+            s.setStatus(status);
+            subscriptionList.add(s);
+        }
+        return subscriptionList;
     }
 }

@@ -22,4 +22,7 @@ public interface SubscriptionServices {
     @WebMethod
     public boolean checkSubscription(String ip, String endpoint, int creator_id, int subscriber_id);
 
+    @WebMethod
+    public subscription[] validateDatabase(String ip, String endpoint) throws Exception;
+
 }

@@ -23,18 +23,15 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
         }
         // upload log
         log log = new log(
-            "menanggapi permintaan subscription request",
-            ip,
-            endpoint
-        );
+                "menanggapi permintaan subscription request",
+                ip,
+                endpoint);
         try {
             this.loggingDao.uploadLog(log);
         } catch (Exception e) {
             throw new Exception("Error while uploading log");
         }
         return res;
-
-
 
     }
 
@@ -53,8 +50,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
         log log = new log(
                 "menanggapi request subscription",
                 ip,
-                endpoint
-        );
+                endpoint);
         try {
             this.loggingDao.uploadLog(log);
         } catch (Exception e) {
@@ -107,8 +103,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
         log log = new log(
                 "menanggapi approve subscription",
                 ip,
-                endpoint
-        );
+                endpoint);
         try {
             this.loggingDao.uploadLog(log);
         } catch (Exception e) {
@@ -163,8 +158,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
         log log = new log(
                 "menanggapi reject subscription",
                 ip,
-                endpoint
-        );
+                endpoint);
         try {
             this.loggingDao.uploadLog(log);
         } catch (Exception e) {
@@ -187,14 +181,63 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
         log log = new log(
                 "menanggapi check subscription",
                 ip,
-                endpoint
-        );
+                endpoint);
         try {
             this.loggingDao.uploadLog(log);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return res;
+    }
+
+    @Override
+    public subscription[] validateDatabase(String ip, String endpoint) throws Exception {
+        List<subscription> list = this.subscriptionDao.getAllSubscription();
+        // delete all subscription
+        String urlDelete = "http://localhost:8080/binotify-app/src/php/validateDB/delete.php";
+        URL objDelete = new URL(urlDelete);
+        HttpURLConnection conDelete = (HttpURLConnection) objDelete.openConnection();
+        conDelete.setRequestMethod("POST");
+
+        conDelete.setDoOutput(true);
+        DataOutputStream wrDelete = new DataOutputStream(conDelete.getOutputStream());
+        wrDelete.flush();
+        wrDelete.close();
+
+        int responseCodeDelete = conDelete.getResponseCode();
+        System.out.println("POST Response Code :: " + responseCodeDelete);
+
+        // loop for every data and insert to db
+        for (int i = 0; i < list.size(); i++) {
+            String urlInsert = "http://localhost:8080/binotify-app/src/php/validateDB/insert.php";
+            String post_params = "creatorID=" + list.get(i).getCreator_id() + "&subscriberID="
+                    + list.get(i).getSubscriber_id() + "&status=" + list.get(i).getStatus();
+            URL objInsert = new URL(urlInsert);
+            HttpURLConnection conInsert = (HttpURLConnection) objInsert.openConnection();
+            conInsert.setRequestMethod("POST");
+
+            conInsert.setDoOutput(true);
+            DataOutputStream wrInsert = new DataOutputStream(conInsert.getOutputStream());
+            wrInsert.writeBytes(post_params);
+            wrInsert.flush();
+            wrInsert.close();
+
+            int responseCodeInsert = conInsert.getResponseCode();
+            System.out.println("POST Response Code :: " + responseCodeInsert);
+        }
+
+        // upload log
+        log log = new log(
+                "revalidasi data",
+                ip,
+                endpoint);
+        try {
+            this.loggingDao.uploadLog(log);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
     }
 
 }
