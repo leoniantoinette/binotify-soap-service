@@ -13,7 +13,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     private loggingDao loggingDao = new loggingDao();
 
     @Override
-    public subscription[] getSubscription(String ip, String endpoint) throws Exception {
+    public subscription[] getSubscription(String ip, String endpoint, String API_KEY) throws Exception {
         List<subscription> list = this.subscriptionDao.getSubscription();
         subscription[] res = new subscription[list.size()];
         for (int i = 0; i < list.size(); i++) {
@@ -36,7 +36,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     }
 
     @Override
-    public boolean addSubscription(String ip, String endpoint, int creator_id, int subscriber_id) {
+    public boolean addSubscription(String ip, String endpoint, int creator_id, int subscriber_id,String API_KEY) {
         System.out.println("ip " + ip + " endpoint " + endpoint);
         subscription subscription = new subscription(creator_id, subscriber_id);
         boolean res = false;
@@ -60,7 +60,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     }
 
     @Override
-    public boolean approveSubscription(String ip, String endpoint, int creator_id, int subscriber_id) {
+    public boolean approveSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY) {
         System.out.println("approveSubscription creator_id " + creator_id + " subscriber_id " + subscriber_id);
         subscription subscription = new subscription(creator_id, subscriber_id);
         boolean res = false;
@@ -114,7 +114,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     }
 
     @Override
-    public boolean rejectSubscription(String ip, String endpoint, int creator_id, int subscriber_id) {
+    public boolean rejectSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY) {
         System.out.println("rejectSubscription creator_id " + creator_id + " subscriber_id " + subscriber_id);
         subscription subscription = new subscription(creator_id, subscriber_id);
         boolean res = false;
@@ -168,7 +168,7 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     }
 
     @Override
-    public boolean checkSubscription(String ip, String endpoint, int creator_id, int subscriber_id) {
+    public boolean checkSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY) {
         subscription subscription = new subscription(creator_id, subscriber_id);
         boolean res = false;
         try {
@@ -191,8 +191,9 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     }
 
     @Override
-    public subscription[] validateDatabase(String ip, String endpoint) throws Exception {
+    public subscription[] validateDatabase(String ip, String endpoint, String API_KEY) throws Exception {
         List<subscription> list = this.subscriptionDao.getAllSubscription();
+        System.out.println("API_KEY " + API_KEY);
 
         String url = "http://localhost:8080/binotify-app/src/php/validateDB/validate.php";
         String post_params = "listSubscription=" + list;
