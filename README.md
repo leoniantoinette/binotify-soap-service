@@ -3,6 +3,11 @@
 > _This is a project done to fulfil one of IF3110's course assignment._
 
 ## Description Web Service
+1. Mendapatkan data subscription (getSubscription)
+2. Menambahkan data request subscription (addSubscription)
+3. Approve/Reject request subscription (approveSubscription,rejectSubscription)
+4. Mengecek status subscription (checkSubscription)
+5. Memvalidatsi database (validateDatabase)
 
 ## Skema Basis Data
 Terdapat 2 tabel basis data yang digunakan yaitu sebagai berikut:
