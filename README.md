@@ -5,7 +5,11 @@
 ## Description Web Service
 
 ## Skema Basis Data
-
+Terdapat 2 tabel basis data yang digunakan yaitu sebagai berikut:
+1. Tabel logging, yang terdiri atas atribut id, description, IP, endpoint, requested_at
+2. Tabel subscription, yang terdiri atas atribut creator_id, subscriber_id, status
+Berikut skema dari basis data yang digunakan :
+<img src="src/assets/diagram.png"/>
 ## Endpoint, Payload, dan response API
 
 ## How To Install
