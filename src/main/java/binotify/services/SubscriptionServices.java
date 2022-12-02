@@ -11,16 +11,16 @@ public interface SubscriptionServices {
     public subscription[] getSubscription(String ip, String endpoint, String API_KEY) throws Exception;
 
     @WebMethod
-    public boolean addSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY);
+    public boolean addSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY)  throws Exception ;
 
     @WebMethod
-    public boolean approveSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY);
+    public boolean approveSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY)  throws Exception ;
 
     @WebMethod
-    public boolean rejectSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY);
+    public boolean rejectSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY) throws Exception ;
 
     @WebMethod
-    public boolean checkSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY);
+    public boolean checkSubscription(String ip, String endpoint, int creator_id, int subscriber_id, String API_KEY) throws Exception ;
 
     @WebMethod
     public subscription[] validateDatabase(String ip, String endpoint, String API_KEY) throws Exception;
