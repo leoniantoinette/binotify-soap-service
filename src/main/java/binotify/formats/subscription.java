@@ -22,4 +22,9 @@ public class subscription {
     public void setSubscriber_id(int subscriber_id) { this.subscriber_id = subscriber_id; }
 
     public void setStatus(String status) { this.status = status; }
+
+    @Override
+    public String toString() {
+        return "{\"creator_id\":\"" + this.creator_id + "\",\"subscriber_id\":\"" + this.subscriber_id + "\",\"status\":\"" + this.status + "\"}";
+    }
 }

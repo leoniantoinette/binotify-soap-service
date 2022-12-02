@@ -193,38 +193,21 @@ public class SubscriptionServicesImpl implements SubscriptionServices {
     @Override
     public subscription[] validateDatabase(String ip, String endpoint) throws Exception {
         List<subscription> list = this.subscriptionDao.getAllSubscription();
-        // delete all subscription
-        String urlDelete = "http://localhost:8080/binotify-app/src/php/validateDB/delete.php";
-        URL objDelete = new URL(urlDelete);
-        HttpURLConnection conDelete = (HttpURLConnection) objDelete.openConnection();
-        conDelete.setRequestMethod("POST");
 
-        conDelete.setDoOutput(true);
-        DataOutputStream wrDelete = new DataOutputStream(conDelete.getOutputStream());
-        wrDelete.flush();
-        wrDelete.close();
+        String url = "http://localhost:8080/binotify-app/src/php/validateDB/validate.php";
+        String post_params = "listSubscription=" + list;
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("POST");
 
-        int responseCodeDelete = conDelete.getResponseCode();
-        System.out.println("POST Response Code :: " + responseCodeDelete);
+        con.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        wr.writeBytes(post_params);
+        wr.flush();
+        wr.close();
 
-        // loop for every data and insert to db
-        for (int i = 0; i < list.size(); i++) {
-            String urlInsert = "http://localhost:8080/binotify-app/src/php/validateDB/insert.php";
-            String post_params = "creatorID=" + list.get(i).getCreator_id() + "&subscriberID="
-                    + list.get(i).getSubscriber_id() + "&status=" + list.get(i).getStatus();
-            URL objInsert = new URL(urlInsert);
-            HttpURLConnection conInsert = (HttpURLConnection) objInsert.openConnection();
-            conInsert.setRequestMethod("POST");
-
-            conInsert.setDoOutput(true);
-            DataOutputStream wrInsert = new DataOutputStream(conInsert.getOutputStream());
-            wrInsert.writeBytes(post_params);
-            wrInsert.flush();
-            wrInsert.close();
-
-            int responseCodeInsert = conInsert.getResponseCode();
-            System.out.println("POST Response Code :: " + responseCodeInsert);
-        }
+        int responseCode = con.getResponseCode();
+        System.out.println("POST Response Code :: " + responseCode);
 
         // upload log
         log log = new log(
