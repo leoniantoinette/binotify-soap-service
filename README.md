@@ -10,6 +10,7 @@ Terdapat 2 tabel basis data yang digunakan yaitu sebagai berikut:
 2. Tabel subscription, yang terdiri atas atribut creator_id, subscriber_id, status
 Berikut skema dari basis data yang digunakan :
 <img src="src/assets/diagram.png"/>
+
 ## Endpoint, Payload, dan response API
 
 ## How To Install
