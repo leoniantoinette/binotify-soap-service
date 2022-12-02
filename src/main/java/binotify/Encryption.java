@@ -183,12 +183,18 @@ public class Encryption {
         String decryptedCipherText = Encryption.decryptPasswordBasedECB(
                 API_KEY, key);
         System.out.println("decrypted = "+ decryptedCipherText);
-        String[] parts = decryptedCipherText.split(".");
-                if( parts[0].equals("rest") || parts[0].equals("php")){
-                    return true;
-                } else {
-                    return false;
-                }
+        // split the string by .
+        String[] parts = decryptedCipherText.split("\\.");
+        String part1 = parts[0];
+
+        if (part1.equals("rest") ||part1.equals("php")) {
+            System.out.println("API_KEY is valid");
+            return true;
+        } else {
+            System.out.println("API_KEY is not valid");
+
+            return false;
+        }
     }
 
 
