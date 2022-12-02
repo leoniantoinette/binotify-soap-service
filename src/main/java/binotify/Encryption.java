@@ -183,7 +183,7 @@ public class Encryption {
         String decryptedCipherText = Encryption.decryptPasswordBasedECB(
                 API_KEY, key);
         System.out.println("decrypted = "+ decryptedCipherText);
-        String[] parts = decryptedCipherText.split(".")
+        String[] parts = decryptedCipherText.split(".");
                 if( parts[0].equals("rest") || parts[0].equals("php")){
                     return true;
                 } else {
